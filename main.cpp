@@ -11,22 +11,10 @@ private:
     float drag;
     float velocityMax;
     float velocityMin;
-    Font font;
 public:
     RectangleShape paddle;
-    Text speedInfo;
 
-    Paddle() {
-        if (!font.loadFromFile(R"(C:\Users\dimapcc\CLionProjects\game\arial.ttf)")) {
-            std::cout << "Fuck it!";
-        }
-
-        speedInfo.setFont(font);
-        speedInfo.setCharacterSize(24);
-        speedInfo.setFillColor(Color::Black);
-        speedInfo.setPosition(5, 5);
-
-        paddle.setSize(Vector2<float>(35, 100));
+    Paddle() {paddle.setSize(Vector2<float>(35, 100));
         paddle.setFillColor(Color(100, 250, 50));
         paddle.setPosition(800 - 35, 0);
 
@@ -69,7 +57,6 @@ public:
         paddle.move(velocity);
     }
     void update() {
-        speedInfo.setString(std::to_string(velocity.x * velocity.x + velocity.y * velocity.y));
         updateMovement();
         updatePhysics();
     }
@@ -91,7 +78,7 @@ int main()
     ball.setFillColor(Color(100, 250, 50));
     ball.setPosition(20, 40);
 
-    Paddle pRight;
+    Paddle rightPaddle;
 
     while (window.isOpen()) {
         Event event;
@@ -102,13 +89,12 @@ int main()
             }
         }
 
-        pRight.update();
+        rightPaddle.update();
 
         window.clear(Color(255, 255, 204));
 
         window.draw(ball);
-        window.draw(pRight.speedInfo);
-        window.draw(pRight.paddle);
+        window.draw(rightPaddle.paddle);
         window.display();
     }
 

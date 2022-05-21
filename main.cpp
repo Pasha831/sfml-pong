@@ -11,12 +11,12 @@ private:
     float drag;
     float velocityMax;
     float velocityMin;
-    float xSize;
-    float ySize;
     String orientation;
     Color green;
 public:
     RectangleShape paddle;
+    float xSize;
+    float ySize;
 
     Paddle(const String& orientation, float xPosition) {
         this->xSize = 35;
@@ -117,16 +117,26 @@ public:
                                    acceleration * ((velocity.y < 0) ? -1.f : 1.f));
         ball.move(velocity);
     }
-    void updateMovement() {
-        if (ball.getPosition().x <= 0 || ball.getPosition().x >= (800 - 2 * radius)) {
-            velocity.x *= -1;
-        }
+    void updateMovement(Paddle left, Paddle right) {
+        // Change the direction by touching upper and lower boundaries (maybe change color?...)
         if (ball.getPosition().y <= 0 || ball.getPosition().y >= (600 - 2 * radius)) {
             velocity.y *= -1;
         }
+
+        // Change the direction after the contact between ball and left/right paddle
+        if (ball.getPosition().x <= left.xSize
+            && ball.getPosition().y + radius >= left.paddle.getPosition().y
+            && ball.getPosition().y + radius <= left.paddle.getPosition().y + left.ySize) {
+            velocity.x *= -1;
+        }
+        if (ball.getPosition().x >= 800 - right.xSize - 2 * radius
+            && ball.getPosition().y + radius >= right.paddle.getPosition().y
+            && ball.getPosition().y + radius <= right.paddle.getPosition().y + left.ySize) {
+            velocity.x *= -1;
+        }
     }
-    void update() {
-        updateMovement();
+    void update(Paddle left, Paddle right) {
+        updateMovement(left, right);
         updatePhysics();
     }
 };
@@ -152,7 +162,7 @@ int main()
 
         leftPaddle.update();
         rightPaddle.update();
-        ball.update();
+        ball.update(leftPaddle, rightPaddle);
 
         window.clear(Color(255, 255, 204));
 

@@ -61,6 +61,16 @@ public:
             velocity.y = 0.f;
         }
 
+        // Set the boundaries for paddles
+        if (paddle.getPosition().y < 0) {
+            paddle.setPosition(paddle.getPosition().x, 0);
+            velocity.y = 0;
+        }
+        if (paddle.getPosition().y > 600 - ySize) {
+            paddle.setPosition(paddle.getPosition().x, 600 - ySize);
+            velocity.y = 0;
+        }
+
         paddle.move(velocity);
     }
     void update() {

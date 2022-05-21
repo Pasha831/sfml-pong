@@ -11,12 +11,22 @@ private:
     float drag;
     float velocityMax;
     float velocityMin;
+    float xSize;
+    float ySize;
+    String orientation;
+    Color green;
 public:
     RectangleShape paddle;
 
-    Paddle() {paddle.setSize(Vector2<float>(35, 100));
-        paddle.setFillColor(Color(100, 250, 50));
-        paddle.setPosition(800 - 35, 0);
+    Paddle(const String& orientation, float xPosition) {
+        this->xSize = 35;
+        this->ySize = 100;
+        this->orientation = orientation;
+        this->green = Color(100, 250, 50);
+
+        paddle.setSize(Vector2<float>(xSize, ySize));
+        paddle.setFillColor(green);
+        paddle.setPosition(xPosition, 250);
 
         initPhysics();
     }
@@ -25,9 +35,6 @@ public:
         velocityMin = 1.f;
         acceleration = 2.f;
         drag = 0.9f;
-    }
-    void display(RenderWindow window) {
-        window.draw(paddle);
     }
     void move(const float dir_x, const float dir_y) {
         // Acceleration
@@ -61,10 +68,18 @@ public:
         updatePhysics();
     }
     void updateMovement() {
-        if (Keyboard::isKeyPressed(sf::Keyboard::Key::Up)) {
-            move(0, -1);
-        } else if (Keyboard::isKeyPressed(sf::Keyboard::Key::Down)) {
-            move(0, 1);
+        if (orientation == "left") {
+            if (Keyboard::isKeyPressed(sf::Keyboard::Key::W)) {
+                move(0, -1);
+            } else if (Keyboard::isKeyPressed(sf::Keyboard::Key::S)) {
+                move(0, 1);
+            }
+        } else {
+            if (Keyboard::isKeyPressed(sf::Keyboard::Key::Up)) {
+                move(0, -1);
+            } else if (Keyboard::isKeyPressed(sf::Keyboard::Key::Down)) {
+                move(0, 1);
+            }
         }
     }
 };
@@ -78,7 +93,8 @@ int main()
     ball.setFillColor(Color(100, 250, 50));
     ball.setPosition(20, 40);
 
-    Paddle rightPaddle;
+    Paddle leftPaddle("left", 0);
+    Paddle rightPaddle("right", 800 - 35);
 
     while (window.isOpen()) {
         Event event;
@@ -89,12 +105,15 @@ int main()
             }
         }
 
+        leftPaddle.update();
         rightPaddle.update();
 
         window.clear(Color(255, 255, 204));
 
         window.draw(ball);
         window.draw(rightPaddle.paddle);
+        window.draw(leftPaddle.paddle);
+
         window.display();
     }
 

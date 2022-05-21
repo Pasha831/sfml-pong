@@ -93,6 +93,24 @@ public:
         }
     }
 };
+class Ball {
+private:
+    float radius;
+    Color red;
+    Vector2<float> position;
+    /*ball.setFillColor(Color(100, 250, 50));
+    ball.setPosition(20, 40);*/
+public:
+    CircleShape ball;
+
+    Ball() {
+        this->radius = 25.f;
+        this->red = Color(255, 153, 0);
+
+        ball.setRadius(radius);
+        ball.setFillColor(red);
+    }
+};
 
 int main()
 {

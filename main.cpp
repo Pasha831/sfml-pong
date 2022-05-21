@@ -96,19 +96,38 @@ public:
 class Ball {
 private:
     float radius;
+    Vector2<float> velocity;
+    float acceleration;
     Color red;
-    Vector2<float> position;
-    /*ball.setFillColor(Color(100, 250, 50));
-    ball.setPosition(20, 40);*/
 public:
     CircleShape ball;
 
     Ball() {
         this->radius = 25.f;
         this->red = Color(255, 153, 0);
+        this->velocity = Vector2<float>(2.5f, 2.5f);
+        this->acceleration = 0.0025f;
 
         ball.setRadius(radius);
+        ball.setPosition(400 - radius, 300 - radius);
         ball.setFillColor(red);
+    }
+    void updatePhysics() {
+        velocity += Vector2<float>(acceleration * ((velocity.x < 0) ? -1.f : 1.f),
+                                   acceleration * ((velocity.y < 0) ? -1.f : 1.f));
+        ball.move(velocity);
+    }
+    void updateMovement() {
+        if (ball.getPosition().x <= 0 || ball.getPosition().x >= (800 - 2 * radius)) {
+            velocity.x *= -1;
+        }
+        if (ball.getPosition().y <= 0 || ball.getPosition().y >= (600 - 2 * radius)) {
+            velocity.y *= -1;
+        }
+    }
+    void update() {
+        updateMovement();
+        updatePhysics();
     }
 };
 
@@ -117,12 +136,10 @@ int main()
     RenderWindow window(sf::VideoMode(800, 600), "App");
     window.setFramerateLimit(60);
 
-    CircleShape ball(25.f);
-    ball.setFillColor(Color(100, 250, 50));
-    ball.setPosition(20, 40);
-
     Paddle leftPaddle("left", 0);
     Paddle rightPaddle("right", 800 - 35);
+
+    Ball ball;
 
     while (window.isOpen()) {
         Event event;
@@ -135,12 +152,13 @@ int main()
 
         leftPaddle.update();
         rightPaddle.update();
+        ball.update();
 
         window.clear(Color(255, 255, 204));
 
-        window.draw(ball);
         window.draw(rightPaddle.paddle);
         window.draw(leftPaddle.paddle);
+        window.draw(ball.ball);
 
         window.display();
     }

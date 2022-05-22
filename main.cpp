@@ -4,6 +4,28 @@
 
 using namespace sf;
 
+class Game {
+private:
+    RenderWindow window;
+    int windowWidth;
+    int windowHeight;
+    String title;
+    int frameLimit;
+    bool isGameOver;
+public:
+    Game() {
+        this->windowWidth = 800.f;
+        this->windowHeight = 600.f;
+        this->title = "Game";
+        this->frameLimit = 60.f;
+        this->isGameOver = false;
+
+        this->window.setSize(Vector2<unsigned int>(windowWidth, windowHeight));
+        this->window.setTitle(title);
+        this->window.setFramerateLimit(frameLimit);
+    }
+};
+
 class Paddle {
 private:
     Vector2<float> velocity;
@@ -99,6 +121,7 @@ private:
     Vector2<float> velocity;
     float acceleration;
     Color red;
+    bool isOutOfZone;  // bool to check if it more left or more right than paddles
 public:
     CircleShape ball;
 
@@ -107,6 +130,7 @@ public:
         this->red = Color(255, 153, 0);
         this->velocity = Vector2<float>(2.5f, 2.5f);
         this->acceleration = 0.0025f;
+        this->isOutOfZone = false;
 
         ball.setRadius(radius);
         ball.setPosition(400 - radius, 300 - radius);
@@ -124,15 +148,21 @@ public:
         }
 
         // Change the direction after the contact between ball and left/right paddle
-        if (ball.getPosition().x <= left.xSize
-            && ball.getPosition().y + radius >= left.paddle.getPosition().y
-            && ball.getPosition().y + radius <= left.paddle.getPosition().y + left.ySize) {
-            velocity.x *= -1;
+        if (ball.getPosition().x <= left.xSize) {
+            if (ball.getPosition().y + radius >= left.paddle.getPosition().y
+                && ball.getPosition().y + radius <= left.paddle.getPosition().y + left.ySize && !isOutOfZone) {
+                velocity.x *= -1;
+            } else {
+                isOutOfZone = true;
+            }
         }
-        if (ball.getPosition().x >= 800 - right.xSize - 2 * radius
-            && ball.getPosition().y + radius >= right.paddle.getPosition().y
-            && ball.getPosition().y + radius <= right.paddle.getPosition().y + left.ySize) {
-            velocity.x *= -1;
+        if (ball.getPosition().x >= 800 - right.xSize - 2 * radius) {
+            if (ball.getPosition().y + radius >= right.paddle.getPosition().y
+                && ball.getPosition().y + radius <= right.paddle.getPosition().y + left.ySize && !isOutOfZone) {
+                velocity.x *= -1;
+            } else {
+                isOutOfZone = true;
+            }
         }
     }
     void update(Paddle left, Paddle right) {

@@ -1,5 +1,4 @@
 #include "../header/Ball.h"
-#include <iostream>
 
 Ball::Ball() {
     this->radius = 25.f;

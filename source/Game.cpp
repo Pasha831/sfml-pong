@@ -1,5 +1,4 @@
 #include "../header/Game.h"
-#include <iostream>
 
 Game::Game() {
     this->windowWidth = 800.f;

@@ -1,7 +1,7 @@
 #include "Score.h"
 
 Score::Score(String orientaton) {
-    if (!this->font.loadFromFile(R"(C:\Users\dimapcc\CLionProjects\game\arial.ttf)")) {
+    if (!this->font.loadFromFile("arial.ttf")) {
         // error...
     }
 

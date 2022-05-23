@@ -3,7 +3,10 @@ project(game)
 
 set(CMAKE_CXX_STANDARD 14)
 
-add_executable(game main.cpp Paddle.cpp Paddle.h Ball.cpp Ball.h Game.cpp Game.h arial.ttf Score.cpp Score.h)
+file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/resources/arial.ttf
+        DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
+
+add_executable(game main.cpp Paddle.cpp Paddle.h Ball.cpp Ball.h Game.cpp Game.h Score.cpp Score.h)
 
 set(SFML_STATIC_LIBRARIES TRUE)
 

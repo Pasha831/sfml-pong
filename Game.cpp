@@ -23,6 +23,13 @@ bool Game::isGameOver() {
 }
 
 void Game::update() {
+    Event event;
+    while (window.pollEvent(event)) {
+        if (event.type == Event::Closed) {
+            this->gameOver = true;
+        }
+    }
+
     leftPaddle->update();
     rightPaddle->update();
     ball.update(*leftPaddle, *rightPaddle, *leftScore, *rightScore);
@@ -38,4 +45,8 @@ void Game::draw() {
     window.draw(rightScore->text);
 
     window.display();
+}
+
+void Game::closeWindow() {
+    window.close();
 }

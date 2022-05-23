@@ -7,5 +7,6 @@ int main()
         game.update();
         game.draw();
     }
+    game.closeWindow();
     return 0;
 }

@@ -28,6 +28,7 @@ public:
     bool isGameOver();
     void update();
     void draw();
+    void closeWindow();
 };
 
 #endif //GAME_GAME_H

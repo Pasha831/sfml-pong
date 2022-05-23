@@ -24,6 +24,7 @@ public:
     void updatePhysics();
     void update();
     void updateMovement();
+    Vector2<float> getVelocity();
 };
 
 #endif //GAME_PADDLE_H

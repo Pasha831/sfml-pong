@@ -1,9 +1,10 @@
 #include "../header/Ball.h"
+#include <iostream>
 
 Ball::Ball() {
     this->radius = 25.f;
     this->red = Color(255, 153, 0);
-    this->acceleration = 0.0025f;
+    this->acceleration = 0.0015f;
     this->isOutOfZone = false;
 
     ball.setRadius(radius);
@@ -11,8 +12,7 @@ Ball::Ball() {
     returnToTheStart();
 }
 void Ball::updatePhysics() {
-    velocity += Vector2<float>(acceleration * ((velocity.x < 0) ? -1.f : 1.f),
-                               acceleration * ((velocity.y < 0) ? -1.f : 1.f));
+    velocity += Vector2<float>(acceleration * ((velocity.x < 0) ? -1.f : 1.f),0);
     ball.move(velocity);
 }
 void Ball::updateMovement(Paddle &left, Paddle &right, Score &leftScore, Score &rightScore) {
@@ -26,6 +26,7 @@ void Ball::updateMovement(Paddle &left, Paddle &right, Score &leftScore, Score &
         if (ball.getPosition().y + radius >= left.paddle.getPosition().y
             && ball.getPosition().y + radius <= left.paddle.getPosition().y + left.ySize && !isOutOfZone) {
             velocity.x *= -1;
+            velocity.y += (left.getVelocity().y) / 10;  // ricochet effect :D
         } else {
             rightScore.plusOne();
             returnToTheStart();
@@ -35,6 +36,7 @@ void Ball::updateMovement(Paddle &left, Paddle &right, Score &leftScore, Score &
         if (ball.getPosition().y + radius >= right.paddle.getPosition().y
             && ball.getPosition().y + radius <= right.paddle.getPosition().y + left.ySize && !isOutOfZone) {
             velocity.x *= -1;
+            velocity.y += (right.getVelocity().y) / 10;  // ricochet effect :D
         } else {
             leftScore.plusOne();
             returnToTheStart();

@@ -74,3 +74,7 @@ void Paddle::updateMovement() {
         }
     }
 }
+
+Vector2<float> Paddle::getVelocity() {
+    return this->velocity;
+}

@@ -19,3 +19,12 @@ Score::Score(String orientaton) {
         this->text.setPosition(700.f, 20.f);
     }
 }
+
+void Score::update() {
+    this->text.setString(std::to_string(points));
+}
+
+void Score::plusOne() {
+    (this->points)++;
+    update();
+}

@@ -18,8 +18,8 @@ public:
 
     Ball();
     void updatePhysics();
-    void updateMovement(Paddle left, Paddle right, Score leftScore, Score rightScore);
-    void update(Paddle left, Paddle right, Score leftScore, Score rightScore);
+    void updateMovement(Paddle &left, Paddle &right, Score &leftScore, Score &rightScore);
+    void update(Paddle &left, Paddle &right, Score &leftScore, Score &rightScore);
 };
 
 #endif //GAME_BALL_H

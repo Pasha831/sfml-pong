@@ -12,6 +12,8 @@ private:
 public:
     Text text;
     Score(String orientation);
+    void update();
+    void plusOne();
 };
 
 

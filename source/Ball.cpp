@@ -1,4 +1,5 @@
 #include "../header/Ball.h"
+#include <iostream>
 
 Ball::Ball() {
     this->radius = 25.f;
@@ -16,7 +17,7 @@ void Ball::updatePhysics() {
                                acceleration * ((velocity.y < 0) ? -1.f : 1.f));
     ball.move(velocity);
 }
-void Ball::updateMovement(Paddle left, Paddle right, Score leftScore, Score rightScore) {
+void Ball::updateMovement(Paddle &left, Paddle &right, Score &leftScore, Score &rightScore) {
     // Change the direction by touching upper and lower boundaries (maybe change color?...)
     if (ball.getPosition().y <= 0 || ball.getPosition().y >= (600 - 2 * radius)) {
         velocity.y *= -1;
@@ -28,6 +29,7 @@ void Ball::updateMovement(Paddle left, Paddle right, Score leftScore, Score righ
             && ball.getPosition().y + radius <= left.paddle.getPosition().y + left.ySize && !isOutOfZone) {
             velocity.x *= -1;
         } else {
+            rightScore.plusOne();
             ball.setPosition(400 - radius, 300 - radius);
             velocity = Vector2<float>(2.5f, 2.5f);
         }
@@ -37,12 +39,13 @@ void Ball::updateMovement(Paddle left, Paddle right, Score leftScore, Score righ
             && ball.getPosition().y + radius <= right.paddle.getPosition().y + left.ySize && !isOutOfZone) {
             velocity.x *= -1;
         } else {
+            leftScore.plusOne();
             ball.setPosition(400 - radius, 300 - radius);
             velocity = Vector2<float>(2.5f, 2.5f);
         }
     }
 }
-void Ball::update(Paddle left, Paddle right, Score leftScore, Score rightScore) {
+void Ball::update(Paddle &left, Paddle &right, Score &leftScore, Score &rightScore) {
     updateMovement(left, right, leftScore, rightScore);
     updatePhysics();
 }

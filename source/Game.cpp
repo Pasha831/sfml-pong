@@ -33,6 +33,8 @@ void Game::update() {
     leftPaddle->update();
     rightPaddle->update();
     ball.update(*leftPaddle, *rightPaddle, *leftScore, *rightScore);
+    leftScore->update();
+    rightScore->update();
 }
 
 void Game::draw() {

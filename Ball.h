@@ -3,6 +3,7 @@
 
 #include <SFML/Graphics.hpp>
 #include "Paddle.h"
+#include "Score.h"
 using namespace sf;
 
 class Ball {
@@ -17,8 +18,8 @@ public:
 
     Ball();
     void updatePhysics();
-    void updateMovement(Paddle left, Paddle right);
-    void update(Paddle left, Paddle right);
+    void updateMovement(Paddle left, Paddle right, Score leftScore, Score rightScore);
+    void update(Paddle left, Paddle right, Score leftScore, Score rightScore);
 };
 
 #endif //GAME_BALL_H

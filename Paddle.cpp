@@ -13,10 +13,10 @@ Paddle::Paddle(const String& orientation, float xPosition) {
     initPhysics();
 }
 void Paddle::initPhysics() {
-    velocityMax = 15.f;
+    velocityMax = 10.f;
     velocityMin = 1.f;
-    acceleration = 2.f;
-    drag = 0.9f;
+    acceleration = 1.25f;
+    drag = 0.95f;
 }
 void Paddle::move(const float dir_x, const float dir_y) {
     // Acceleration

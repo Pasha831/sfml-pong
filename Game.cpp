@@ -1,4 +1,5 @@
 #include "Game.h"
+#include <iostream>
 
 Game::Game() {
     this->windowWidth = 800.f;
@@ -12,6 +13,9 @@ Game::Game() {
 
     this->leftPaddle = new Paddle("left", 0);
     this->rightPaddle = new Paddle("right", 800 - 35);
+
+    this->leftScore = new Score("left");
+    this->rightScore = new Score("right");
 }
 
 bool Game::isGameOver() {
@@ -21,7 +25,7 @@ bool Game::isGameOver() {
 void Game::update() {
     leftPaddle->update();
     rightPaddle->update();
-    ball.update(*leftPaddle, *rightPaddle);
+    ball.update(*leftPaddle, *rightPaddle, *leftScore, *rightScore);
 }
 
 void Game::draw() {
@@ -30,6 +34,8 @@ void Game::draw() {
     window.draw(rightPaddle->paddle);
     window.draw(leftPaddle->paddle);
     window.draw(ball.ball);
+    window.draw(leftScore->text);
+    window.draw(rightScore->text);
 
     window.display();
 }

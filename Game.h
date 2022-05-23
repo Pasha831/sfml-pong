@@ -3,6 +3,7 @@
 
 #include "Paddle.h"
 #include "Ball.h"
+#include "Score.h"
 #include <SFML/Graphics.hpp>
 using namespace sf;
 
@@ -19,6 +20,9 @@ private:
     Paddle *rightPaddle;
 
     Ball ball;
+
+    Score *leftScore;
+    Score *rightScore;
 public:
     Game();
     bool isGameOver();

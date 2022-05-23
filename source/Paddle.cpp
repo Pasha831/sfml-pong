@@ -1,4 +1,4 @@
-#include "Paddle.h"
+#include "../header/Paddle.h"
 
 Paddle::Paddle(const String& orientation, float xPosition) {
     this->xSize = 35;

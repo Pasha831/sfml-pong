@@ -1,4 +1,4 @@
-#include "Score.h"
+#include "../header/Score.h"
 
 Score::Score(String orientaton) {
     if (!this->font.loadFromFile("arial.ttf")) {

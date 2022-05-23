@@ -1,4 +1,4 @@
-#include "Ball.h"
+#include "../header/Ball.h"
 
 Ball::Ball() {
     this->radius = 25.f;

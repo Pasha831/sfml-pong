@@ -2,31 +2,11 @@
 #include <iostream>
 #include <valarray>
 
+#include "Game.h"
+
 using namespace sf;
 
-class Game {
-private:
-    RenderWindow window;
-    int windowWidth;
-    int windowHeight;
-    String title;
-    int frameLimit;
-    bool isGameOver;
-public:
-    Game() {
-        this->windowWidth = 800.f;
-        this->windowHeight = 600.f;
-        this->title = "Game";
-        this->frameLimit = 60.f;
-        this->isGameOver = false;
-
-        this->window.setSize(Vector2<unsigned int>(windowWidth, windowHeight));
-        this->window.setTitle(title);
-        this->window.setFramerateLimit(frameLimit);
-    }
-};
-
-class Paddle {
+/*class Paddle {
 private:
     Vector2<float> velocity;
     float acceleration;
@@ -169,39 +149,14 @@ public:
         updateMovement(left, right);
         updatePhysics();
     }
-};
+};*/
 
 int main()
 {
-    RenderWindow window(sf::VideoMode(800, 600), "App");
-    window.setFramerateLimit(60);
-
-    Paddle leftPaddle("left", 0);
-    Paddle rightPaddle("right", 800 - 35);
-
-    Ball ball;
-
-    while (window.isOpen()) {
-        Event event;
-
-        while (window.pollEvent(event)) {
-            if (event.type == Event::Closed) {
-                window.close();
-            }
-        }
-
-        leftPaddle.update();
-        rightPaddle.update();
-        ball.update(leftPaddle, rightPaddle);
-
-        window.clear(Color(255, 255, 204));
-
-        window.draw(rightPaddle.paddle);
-        window.draw(leftPaddle.paddle);
-        window.draw(ball.ball);
-
-        window.display();
+    Game game;
+    while (!game.isGameOver()) {
+        game.update();
+        game.draw();
     }
-
     return 0;
 }

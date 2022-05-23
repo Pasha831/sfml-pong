@@ -4,6 +4,8 @@
 #include <SFML/Graphics.hpp>
 #include "Paddle.h"
 #include "Score.h"
+#include <cstdlib>
+#include <ctime>
 using namespace sf;
 
 class Ball {
@@ -18,6 +20,7 @@ public:
 
     Ball();
     void updatePhysics();
+    void returnToTheStart();
     void updateMovement(Paddle &left, Paddle &right, Score &leftScore, Score &rightScore);
     void update(Paddle &left, Paddle &right, Score &leftScore, Score &rightScore);
 };

@@ -3,13 +3,12 @@
 Ball::Ball() {
     this->radius = 25.f;
     this->red = Color(255, 153, 0);
-    this->velocity = Vector2<float>(2.5f, 2.5f);
     this->acceleration = 0.0025f;
     this->isOutOfZone = false;
 
     ball.setRadius(radius);
-    ball.setPosition(400 - radius, 300 - radius);
     ball.setFillColor(red);
+    returnToTheStart();
 }
 void Ball::updatePhysics() {
     velocity += Vector2<float>(acceleration * ((velocity.x < 0) ? -1.f : 1.f),
@@ -29,8 +28,7 @@ void Ball::updateMovement(Paddle &left, Paddle &right, Score &leftScore, Score &
             velocity.x *= -1;
         } else {
             rightScore.plusOne();
-            ball.setPosition(400 - radius, 300 - radius);
-            velocity = Vector2<float>(2.5f, 2.5f);
+            returnToTheStart();
         }
     }
     if (ball.getPosition().x >= 800 - right.xSize - 2 * radius) {
@@ -39,12 +37,22 @@ void Ball::updateMovement(Paddle &left, Paddle &right, Score &leftScore, Score &
             velocity.x *= -1;
         } else {
             leftScore.plusOne();
-            ball.setPosition(400 - radius, 300 - radius);
-            velocity = Vector2<float>(2.5f, 2.5f);
+            returnToTheStart();
         }
     }
 }
 void Ball::update(Paddle &left, Paddle &right, Score &leftScore, Score &rightScore) {
     updateMovement(left, right, leftScore, rightScore);
     updatePhysics();
+}
+
+void Ball::returnToTheStart() {
+    srand(time(NULL));
+
+    ball.setPosition(400 - radius, 300 - radius);
+
+    // rand() % 2 - a random number between 0 and 1
+    // if 0 -> positive direction, if 1 -> negative direction
+    velocity = Vector2<float>(2.5f * (float)((rand() % 2) ? 1 : -1),
+                              2.5f * (float)((rand() % 2) ? 1 : -1));
 }

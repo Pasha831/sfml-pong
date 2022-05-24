@@ -4,7 +4,7 @@
 Ball::Ball() {
     this->radius = 25.f;
     this->red = Color(255, 153, 0);
-    this->acceleration = 0.0015f;
+    this->acceleration = 0.0025f;
     this->isOutOfZone = false;
 
     ball.setRadius(radius);
@@ -23,8 +23,8 @@ void Ball::updateMovement(Paddle &left, Paddle &right, Score &leftScore, Score &
 
     // Change the direction after the contact between ball and left/right paddle
     if (ball.getPosition().x <= left.xSize) {
-        if (ball.getPosition().y + radius >= left.paddle.getPosition().y
-            && ball.getPosition().y + radius <= left.paddle.getPosition().y + left.ySize && !isOutOfZone) {
+        if ((ball.getPosition().y + radius >= left.paddle.getPosition().y - 20)
+            && (ball.getPosition().y + radius <= left.paddle.getPosition().y + left.ySize + 20) && !isOutOfZone) {
             velocity.x *= -1;
             velocity.y += (left.getVelocity().y) / 10;  // ricochet effect :D
         } else {
@@ -33,8 +33,8 @@ void Ball::updateMovement(Paddle &left, Paddle &right, Score &leftScore, Score &
         }
     }
     if (ball.getPosition().x >= 800 - right.xSize - 2 * radius) {
-        if (ball.getPosition().y + radius >= right.paddle.getPosition().y
-            && ball.getPosition().y + radius <= right.paddle.getPosition().y + left.ySize && !isOutOfZone) {
+        if ((ball.getPosition().y + radius >= right.paddle.getPosition().y - 20)
+            && (ball.getPosition().y + radius <= right.paddle.getPosition().y + left.ySize + 20) && !isOutOfZone) {
             velocity.x *= -1;
             velocity.y += (right.getVelocity().y) / 10;  // ricochet effect :D
         } else {

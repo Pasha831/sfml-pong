@@ -10,8 +10,9 @@ private:
     Text condition;
     std::string possibleConditions[2];
 public:
-    Info(int positionX, int positionY);
+    Info();
     Text getInfo();
+    void setPauseText();
 };
 
 

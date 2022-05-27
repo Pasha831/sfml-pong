@@ -18,7 +18,7 @@ Game::Game() {
     this->leftScore = new Score("left");
     this->rightScore = new Score("right");
 
-    this->info = new Info(355, 250);
+    this->pauseInfo.setPauseText();
 }
 
 bool Game::isGameOver() {
@@ -57,7 +57,7 @@ void Game::draw() {
     window.draw(rightScore->text);
 
     if (isPaused) {
-        window.draw(info->getInfo());
+        window.draw(pauseInfo.getInfo());
     }
 
     window.display();

@@ -9,6 +9,7 @@ Game::Game() {
 
     this->window.create(VideoMode(windowWidth, windowHeight), title);
     this->window.setFramerateLimit(frameLimit);
+    this->window.setVerticalSyncEnabled(true);
 
     this->leftPaddle = new Paddle("left", 0);
     this->rightPaddle = new Paddle("right", 800 - 35);

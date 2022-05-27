@@ -15,6 +15,7 @@ private:
     String title;
     int frameLimit;
     bool gameOver;
+    bool isPaused;
 
     Paddle *leftPaddle;
     Paddle *rightPaddle;

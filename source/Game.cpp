@@ -1,4 +1,5 @@
 #include "../header/Game.h"
+#include <iostream>
 
 Game::Game() {
     this->windowWidth = 800.f;
@@ -6,6 +7,7 @@ Game::Game() {
     this->title = "Game";
     this->frameLimit = 60.f;
     this->gameOver = false;
+    this->isPaused = false;
 
     this->window.create(VideoMode(windowWidth, windowHeight), title);
     this->window.setFramerateLimit(frameLimit);
@@ -28,13 +30,20 @@ void Game::update() {
         if (event.type == Event::Closed) {
             this->gameOver = true;
         }
+        if (event.type == Event::KeyPressed) {
+            if (event.key.code == Keyboard::Escape) {
+                isPaused = !isPaused;
+            }
+        }
     }
 
-    leftPaddle->update();
-    rightPaddle->update();
-    ball.update(*leftPaddle, *rightPaddle, *leftScore, *rightScore);
-    leftScore->update();
-    rightScore->update();
+    if (!isPaused) {
+        leftPaddle->update();
+        rightPaddle->update();
+        ball.update(*leftPaddle, *rightPaddle, *leftScore, *rightScore);
+        leftScore->update();
+        rightScore->update();
+    }
 }
 
 void Game::draw() {

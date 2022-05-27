@@ -55,6 +55,11 @@ void Game::draw() {
     window.draw(leftScore->text);
     window.draw(rightScore->text);
 
+    if (isPaused) {
+        std::cout << "shit!\n";
+        window.draw(info.getInfo());
+    }
+
     window.display();
 }
 

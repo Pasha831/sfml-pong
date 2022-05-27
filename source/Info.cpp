@@ -1,6 +1,6 @@
 #include "../header/Info.h"
 
-Info::Info() {
+Info::Info(int positionX, int positionY) {
     if (!this->font.loadFromFile("arial.ttf")) {
         // error...
     }
@@ -8,11 +8,12 @@ Info::Info() {
     this->condition.setFont(font);
     this->condition.setCharacterSize(24);
     this->condition.setFillColor(Color(Color::Black));
-    this->condition.setPosition(355, 250);
+    this->condition.setPosition(positionX, positionY);
 
-    this->possibleConditions[0] = "Paused";
+    this->possibleConditions[0] = "Press any key to start";
+    this->possibleConditions[1] = "Paused";
 
-    this->condition.setString(possibleConditions[0]);
+    this->condition.setString(possibleConditions[1]);
 }
 
 Text Info::getInfo() {

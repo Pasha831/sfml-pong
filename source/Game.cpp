@@ -1,5 +1,4 @@
 #include "../header/Game.h"
-#include <iostream>
 
 Game::Game() {
     this->windowWidth = 800.f;
@@ -18,6 +17,8 @@ Game::Game() {
 
     this->leftScore = new Score("left");
     this->rightScore = new Score("right");
+
+    this->info = new Info(355, 250);
 }
 
 bool Game::isGameOver() {
@@ -56,8 +57,7 @@ void Game::draw() {
     window.draw(rightScore->text);
 
     if (isPaused) {
-        std::cout << "shit!\n";
-        window.draw(info.getInfo());
+        window.draw(info->getInfo());
     }
 
     window.display();

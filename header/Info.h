@@ -8,9 +8,9 @@ class Info {
 private:
     Font font;
     Text condition;
-    std::string possibleConditions[1];
+    std::string possibleConditions[2];
 public:
-    Info();
+    Info(int positionX, int positionY);
     Text getInfo();
 };
 

@@ -26,7 +26,7 @@ private:
     Score *leftScore;
     Score *rightScore;
 
-    Info info;
+    Info *info;
 public:
     Game();
     bool isGameOver();

@@ -15,6 +15,7 @@ public:
     void update();
     void plusOne();
     void minusOne();
+    int getPoints();
 };
 
 

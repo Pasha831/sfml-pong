@@ -33,3 +33,7 @@ void Score::minusOne() {
     (this->points)--;
     update();
 }
+
+int Score::getPoints() {
+    return this->points;
+}

@@ -11,6 +11,9 @@ Info::Info() {
 
     this->possibleConditions[0] = "Pong!\nPress any key to start";
     this->possibleConditions[1] = "Paused";
+    this->possibleConditions[2] = "Game over!\nPlayer 1 one";
+    this->possibleConditions[3] = "Game over!\nPlayer 2 one";
+    this->possibleConditions[4] = "\nPress any key to exit\nPress Enter to start again";
 }
 
 Text Info::getInfo() {
@@ -25,4 +28,14 @@ void Info::setPauseText() {
 void Info::setStartText() {
     condition.setPosition(300, 250);
     condition.setString(possibleConditions[0]);
+}
+
+void Info::setPlayerWonText(int position) {
+    condition.setPosition(275, 250);
+    if (position == 0) {
+        condition.setString(possibleConditions[2]);
+    } else {
+        condition.setString(possibleConditions[3]);
+    }
+    condition.setString(condition.getString() + possibleConditions[4]);
 }

@@ -19,23 +19,29 @@ private:
     bool gameOver;
     bool isPaused;
     bool isJustStarted;
+    bool isJustEnded;
 
     Paddle *leftPaddle;
     Paddle *rightPaddle;
 
-    Ball ball;
+    Ball *ball;
 
     Score *leftScore;
     Score *rightScore;
 
     Info pauseInfo;
     Info startInfo;
+    Info endInfo;
+
+    int pointsToEnd;
 public:
     Game();
     bool isGameOver();
     void update();
     void draw();
     void closeWindow();
+    void checkTheEnd(Score leftScore, Score rightScore);
+    void resetGame();
 };
 
 #endif //GAME_GAME_H

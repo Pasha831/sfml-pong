@@ -6,22 +6,11 @@ Game::Game() {
     this->title = "Game";
     this->frameLimit = 60.f;
 
-    this->gameOver = false;
-    this->isPaused = false;
-    this->isJustStarted = true;
-
     this->window.create(VideoMode(windowWidth, windowHeight), title);
     this->window.setFramerateLimit(frameLimit);
     this->window.setVerticalSyncEnabled(true);
 
-    this->leftPaddle = new Paddle("left", 0);
-    this->rightPaddle = new Paddle("right", 800 - 35);
-
-    this->leftScore = new Score("left");
-    this->rightScore = new Score("right");
-
-    this->pauseInfo.setPauseText();
-    this->startInfo.setStartText();
+    resetGame();
 }
 
 bool Game::isGameOver() {
@@ -35,7 +24,17 @@ void Game::update() {
             this->gameOver = true;
         }
         if (event.type == Event::KeyPressed) {
-            this->isJustStarted = false;  // press any button and start a game
+            if (isJustStarted) {
+                this->isJustStarted = false;  // press any button and start a game
+            }
+            if (isJustEnded) {
+                if (event.key.code == Keyboard::Enter) {
+                    resetGame();
+                    return;
+                } else {
+                    this->gameOver = true;
+                }
+            }
 
             if (event.key.code == Keyboard::Escape) {
                 isPaused = !isPaused;
@@ -50,9 +49,10 @@ void Game::update() {
         if (!isPaused && !isJustStarted) {
             leftPaddle->update();
             rightPaddle->update();
-            ball.update(*leftPaddle, *rightPaddle, *leftScore, *rightScore);
+            ball->update(*leftPaddle, *rightPaddle, *leftScore, *rightScore);
             leftScore->update();
             rightScore->update();
+            checkTheEnd(*leftScore, *rightScore);
         }
     }
 }
@@ -63,13 +63,15 @@ void Game::draw() {
 
         if (isJustStarted) {
             window.draw(startInfo.getInfo());
+        } else if (isJustEnded) {
+            window.draw(endInfo.getInfo());
         } else {
             if (isPaused) {
                 window.draw(pauseInfo.getInfo());
             }
             window.draw(rightPaddle->paddle);
             window.draw(leftPaddle->paddle);
-            window.draw(ball.ball);
+            window.draw(ball->ball);
             window.draw(leftScore->text);
             window.draw(rightScore->text);
         }
@@ -80,4 +82,34 @@ void Game::draw() {
 
 void Game::closeWindow() {
     window.close();
+}
+
+void Game::checkTheEnd(Score leftScore, Score rightScore) {
+    if (leftScore.getPoints() == pointsToEnd && !isJustEnded) {
+        endInfo.setPlayerWonText(0);
+        isJustEnded = true;
+    }
+    if (rightScore.getPoints() == pointsToEnd && !isJustEnded) {
+        endInfo.setPlayerWonText(1);
+        isJustEnded = true;
+    }
+}
+
+void Game::resetGame() {
+    this->gameOver = false;
+    this->isPaused = false;
+    this->isJustStarted = true;
+    this->isJustEnded = false;
+
+    this->ball = new Ball();
+    this->leftPaddle = new Paddle("left", 0);
+    this->rightPaddle = new Paddle("right", 800 - 35);
+
+    this->leftScore = new Score("left");
+    this->rightScore = new Score("right");
+
+    this->pauseInfo.setPauseText();
+    this->startInfo.setStartText();
+
+    this->pointsToEnd = 3;
 }

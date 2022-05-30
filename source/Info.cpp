@@ -9,7 +9,7 @@ Info::Info() {
     this->condition.setCharacterSize(24);
     this->condition.setFillColor(Color(Color::Black));
 
-    this->possibleConditions[0] = "Press any key to start";
+    this->possibleConditions[0] = "Pong!\nPress any key to start";
     this->possibleConditions[1] = "Paused";
 }
 
@@ -20,4 +20,9 @@ Text Info::getInfo() {
 void Info::setPauseText() {
     condition.setPosition(355, 250);
     condition.setString(possibleConditions[1]);
+}
+
+void Info::setStartText() {
+    condition.setPosition(300, 250);
+    condition.setString(possibleConditions[0]);
 }

@@ -5,8 +5,10 @@ Game::Game() {
     this->windowHeight = 600.f;
     this->title = "Game";
     this->frameLimit = 60.f;
+
     this->gameOver = false;
     this->isPaused = false;
+    this->isJustStarted = true;
 
     this->window.create(VideoMode(windowWidth, windowHeight), title);
     this->window.setFramerateLimit(frameLimit);
@@ -19,6 +21,7 @@ Game::Game() {
     this->rightScore = new Score("right");
 
     this->pauseInfo.setPauseText();
+    this->startInfo.setStartText();
 }
 
 bool Game::isGameOver() {
@@ -32,6 +35,8 @@ void Game::update() {
             this->gameOver = true;
         }
         if (event.type == Event::KeyPressed) {
+            this->isJustStarted = false;  // press any button and start a game
+
             if (event.key.code == Keyboard::Escape) {
                 isPaused = !isPaused;
             }
@@ -42,7 +47,7 @@ void Game::update() {
     }
 
     if (!gameOver) {
-        if (!isPaused) {
+        if (!isPaused && !isJustStarted) {
             leftPaddle->update();
             rightPaddle->update();
             ball.update(*leftPaddle, *rightPaddle, *leftScore, *rightScore);
@@ -56,14 +61,18 @@ void Game::draw() {
     if (!gameOver) {
         window.clear(Color(255, 255, 204));
 
-        if (isPaused) {
-            window.draw(pauseInfo.getInfo());
+        if (isJustStarted) {
+            window.draw(startInfo.getInfo());
+        } else {
+            if (isPaused) {
+                window.draw(pauseInfo.getInfo());
+            }
+            window.draw(rightPaddle->paddle);
+            window.draw(leftPaddle->paddle);
+            window.draw(ball.ball);
+            window.draw(leftScore->text);
+            window.draw(rightScore->text);
         }
-        window.draw(rightPaddle->paddle);
-        window.draw(leftPaddle->paddle);
-        window.draw(ball.ball);
-        window.draw(leftScore->text);
-        window.draw(rightScore->text);
 
         window.display();
     }

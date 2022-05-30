@@ -15,8 +15,10 @@ private:
     int windowHeight;
     String title;
     int frameLimit;
+
     bool gameOver;
     bool isPaused;
+    bool isJustStarted;
 
     Paddle *leftPaddle;
     Paddle *rightPaddle;
@@ -27,6 +29,7 @@ private:
     Score *rightScore;
 
     Info pauseInfo;
+    Info startInfo;
 public:
     Game();
     bool isGameOver();

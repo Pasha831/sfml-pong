@@ -13,6 +13,7 @@ public:
     Info();
     Text getInfo();
     void setPauseText();
+    void setStartText();
 };
 
 

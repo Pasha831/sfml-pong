@@ -41,29 +41,32 @@ void Game::update() {
         }
     }
 
-    if (!isPaused) {
-        leftPaddle->update();
-        rightPaddle->update();
-        ball.update(*leftPaddle, *rightPaddle, *leftScore, *rightScore);
-        leftScore->update();
-        rightScore->update();
+    if (!gameOver) {
+        if (!isPaused) {
+            leftPaddle->update();
+            rightPaddle->update();
+            ball.update(*leftPaddle, *rightPaddle, *leftScore, *rightScore);
+            leftScore->update();
+            rightScore->update();
+        }
     }
 }
 
 void Game::draw() {
-    window.clear(Color(255, 255, 204));
+    if (!gameOver) {
+        window.clear(Color(255, 255, 204));
 
-    window.draw(rightPaddle->paddle);
-    window.draw(leftPaddle->paddle);
-    window.draw(ball.ball);
-    window.draw(leftScore->text);
-    window.draw(rightScore->text);
+        if (isPaused) {
+            window.draw(pauseInfo.getInfo());
+        }
+        window.draw(rightPaddle->paddle);
+        window.draw(leftPaddle->paddle);
+        window.draw(ball.ball);
+        window.draw(leftScore->text);
+        window.draw(rightScore->text);
 
-    if (isPaused) {
-        window.draw(pauseInfo.getInfo());
+        window.display();
     }
-
-    window.display();
 }
 
 void Game::closeWindow() {

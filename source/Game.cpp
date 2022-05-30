@@ -35,6 +35,9 @@ void Game::update() {
             if (event.key.code == Keyboard::Escape) {
                 isPaused = !isPaused;
             }
+            if (event.key.code == Keyboard::Tilde) {
+                rightScore->minusOne();
+            }
         }
     }
 

@@ -6,7 +6,7 @@ set(CMAKE_CXX_STANDARD 14)
 file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/resources/arial.ttf
         DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
 
-add_executable(game source/main.cpp source/Paddle.cpp header/Paddle.h source/Ball.cpp header/Ball.h source/Game.cpp header/Game.h source/Score.cpp header/Score.h)
+add_executable(game source/main.cpp source/Paddle.cpp header/Paddle.h source/Ball.cpp header/Ball.h source/Game.cpp header/Game.h source/Score.cpp header/Score.h source/Info.cpp header/Info.h)
 
 set(SFML_STATIC_LIBRARIES TRUE)
 

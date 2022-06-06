@@ -31,8 +31,6 @@ void Game::update() {
                 if (event.key.code == Keyboard::Enter) {
                     resetGame();
                     return;
-                } else {
-                    this->gameOver = true;
                 }
             }
 
